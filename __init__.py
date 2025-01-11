@@ -1,4 +1,4 @@
-import .web # noqa
+from . import web # noqa
 
 NODE_CLASS_MAPPINGS = {
     # none
