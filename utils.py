@@ -1,10 +1,16 @@
 import requests
 from tqdm import tqdm
+from os import path
 
 def download_url(url: str, filepath: str) -> None:
     """
     Stream the given URL to the given file path.
     """
+
+    if path.exists(filepath):
+        # TODO: check ETag and Last-Modified headers to see if we need to download the file again
+        print(f"File {filepath} already exists, skipping download")
+        return
 
     # Streaming, so we can iterate over the response.
     response = requests.get(url, stream=True)
