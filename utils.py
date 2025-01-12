@@ -22,3 +22,5 @@ def download_url(url: str, filepath: str) -> None:
 
     if total_size != 0 and progress_bar.n != total_size:
         raise RuntimeError(f"Could not download file, got {progress_bar.n} bytes out of {total_size} bytes")
+    else:
+        print(f"Downloaded {progress_bar.n} bytes to {filepath} successfully")
