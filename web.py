@@ -26,6 +26,9 @@ async def download_model(request):
         return web.Response(status=400, text="model_name not found in request")
 
     dest_folder = folder_names_and_paths[folder][0][0]
+    if not os.path.exists(dest_folder):
+        os.makedirs(dest_folder, exist_ok=True)
+
     print("Downloading model", request, folder, source_url, model_name, dest_folder)
     download_url(source_url, os.path.join(dest_folder, model_name))
     return web.Response(status=200, text="Model downloaded")
