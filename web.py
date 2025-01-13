@@ -33,5 +33,20 @@ async def download_model(request):
     download_url(source_url, os.path.join(dest_folder, model_name))
     return web.Response(status=200, text="Model downloaded")
 
+@routes.get("/workflows/{workflow_name}")
+async def get_workflow(request):
+    workflow_name = request.match_info.get("workflow_name", None)
+    if workflow_name is None:
+        return web.Response(status=400, text="Workflow name not found in request")
+
+    print("Getting workflow", request, workflow_name)
+    workflow_file = os.path.join(folder_names_and_paths["workflows"][0][0], workflow_name)
+    if not os.path.exists(workflow_file):
+        return web.Response(status=404, text="Workflow not found")
+
+    with open(workflow_file, "r") as f:
+        workflow = f.read()
+    return web.Response(status=200, text=workflow)
+
 print("Adding Thalis AI routes")
 PromptServer.instance.app.add_routes(routes)
